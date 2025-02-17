@@ -7,6 +7,7 @@ phases:
     commands:
       - echo "Installing dependencies"
       - yum update -y && yum upgrade -y && yum install -y git docker awscli
+      - systemctl enable docker && systemctl start docker 
 
   pre_build:
     commands:
