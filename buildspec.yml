@@ -6,7 +6,7 @@ phases:
       python: 3.8
     commands:
       - echo "Installing dependencies"
-      - apt update -y && apt upgrade -y && apt install -y git && apt install -y docker 
+      - apt update -y && apt upgrade -y && apt install -y git && apt install -y docker.io
       - echo "docker installed"
       - apt install -y awscli
       - sudo systemctl enable docker && sudo systemctl start docker 
