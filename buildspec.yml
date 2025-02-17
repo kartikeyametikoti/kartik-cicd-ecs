@@ -14,8 +14,8 @@ phases:
     commands:
       - echo "Logging into Amazon ECR"
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 905418302596.dkr.ecr.us-east-1.amazonaws.com
-      - REPO_URI = "905418302596.dkr.ecr.us-east-1.amazonaws.com/kartik-repo"
-      - IMAGE_TAG = $(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-7)    
+      - REPO_URI="905418302596.dkr.ecr.us-east-1.amazonaws.com/kartik-repo"
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-7)    
 
   build:
     commands:
