@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - echo "Installing dependencies"
+      - apt-get update && apt-get install -y git
+
+  pre_build:
+    commands:
+      - echo "Logging into Amazon ECR"
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 491085395524.dkr.ecr.us-east-1.amazonaws.com
+      - REPO_URI = "905418302596.dkr.ecr.us-east-1.amazonaws.com/kartik-repo"
+      - IMAGE_TAG = $(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-7)    
+
+  build:
+    commands:
+      - echo "Building the Docker image"
+      - docker build -t $REPO_URI:$IMAGE_TAG .
+      - echo "Docker image built  successfully"
+      - docker tag $REPO_URI:$IMAGE_TAG $REPO_URI:latest
+      - echo "image was tagged successfully with latest tag"
+
+  post_build:
+    commands:
+      - docker push $REPO_URI:$IMAGE_TAG
+      - docker push $REPO_URI:latest
+      - echo "Docker images(both) pushed successfully to amazon ECR"
+      - echo Updating the ECS task definition...
+      - printf '[{"name":"kartik","image":"%s","essential":true}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
+
+artifacts:
+  files:
+    - "**/"
+    - imagedefinitions.json

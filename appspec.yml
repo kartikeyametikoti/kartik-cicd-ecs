@@ -1,0 +1,11 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "kartik-definition"
+        LoadBalancerInfo:
+          ContainerName: "kartik"
+          ContainerPort: 5000
+
+                 
