@@ -8,4 +8,9 @@ Resources:
           ContainerName: "kartik"
           ContainerPort: 5000
 
-                 
+# Speed up Blue-Green Deployment
+deploymentOption: WITH_TRAFFIC_CONTROL
+terminationWaitTimeInMinutes: 1  # Reduce wait time from 30 min to 1 min
+deploymentConfiguration:
+  type: ALL_AT_ONCE  # Instantly shift 100% traffic to new tasks
+
