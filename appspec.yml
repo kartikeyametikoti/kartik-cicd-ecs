@@ -3,7 +3,7 @@ Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: "kartik-definition"
+        TaskDefinition: "arn:aws:ecs:us-east-1:905418302596:task-definition/kartik:2"
         LoadBalancerInfo:
           ContainerName: "kartik"
           ContainerPort: 5000
